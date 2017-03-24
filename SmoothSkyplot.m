@@ -16,7 +16,7 @@ thmin = thrange(1);
 thmax = thrange(end);
 
 if ~exist('phirange')
-    phirange = 0:360;
+    phirange = -180:180;
 end
 phimin = phirange(1);
 phimax = phirange(end);
@@ -77,7 +77,7 @@ for i = 1:nl
           smap(i,j)=-0.1;
       end
       %atand(x(i)/y(j))
-      if (atand(x(i)/y(j)))>phimax | (atand(x(i)/y(j)))<phimin | y(j)<0
+      if (atand(x(i)/y(j)))>phimax | (atand(x(i)/y(j)))<phimin %| y(j)<0
           smap(i,j)=-0.1;
       end  
     end

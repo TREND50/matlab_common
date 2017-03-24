@@ -3,8 +3,8 @@ function []=crflux(threshold)
 % OMH 20/10/09
 
 delta_days = 1; %days
-mindeg = 89;
-maxdeg = 90;
+mindeg = 60;
+maxdeg = 85;
 %surf = 5000; %m2
 %surf = 800*200; %TREND-15
 %surf = 2700*500; %TREND-50
@@ -13,10 +13,10 @@ maxdeg = 90;
 %surf = 2500*600; % GRAND-proto 
 %surf = (50).^2
 %surf = 220e3*270e3; % GRAND60000
-surf = 200000*1e6; % GRAND200000
+%surf = 200000*1e6; % GRAND200000
 %surf = 3.14*200*200;
 %surf = 3.14*500*500;  % LHASSO
-
+surf = 300*1000*1000;
 delta_t = delta_days*3600*24;  %s
 
 index1 = 3.26;  % Below ankle (10^18.6eV)
