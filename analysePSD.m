@@ -13,13 +13,14 @@ end
 if ~exist('figid')
     figid = 1;
 end
-film = 0;
+%film = 0;
 scrsz = get( 0, 'ScreenSize' );
 d = ReadPSD( run, antenna );
 if size(d,1)==0
     disp(sprintf('No data found for antenna %d', antenna))
     return
 end
+
 [y m day h mn s] = unixSecs2Date(d.tdeb);
 ut = (h*3600+mn*60+s+d.t)/3600; % [h]
 loct = ut+8;
@@ -36,24 +37,26 @@ G = mean( d.psd( d.f > 35e6 & d.f < 95e6, : ), 1 );
 figure( antenna );
 set(antenna, 'Name', sprintf('Antenna %d',antenna),'NumberTitle','off','Position',[1 scrsz(2) scrsz(3)/3 scrsz(4)]);
 subplot(2,1,1)
-if length(run)==1 % periodogram
+if 0
+    %length(run)==1 % periodogram
     imagesc( lst, d.f/1e6, d.psd );
     set( gca, 'YDir', 'normal' );
-    %xlim([0 24])
+    xlim([0 24])
     xlabel( 'LST time  [ hours ]', 'FontSize', 20 );
     ylabel( 'Frequency  [ MHz ]', 'FontSize', 20 );
     title( 'Amplitude [ dB ref  V / Hz^{1/2} ]', 'FonTSize', 20 );
     colorbar;
     set( gca, 'FontSize', 16 );
 else
-    plot( loct, 20*log10( d.sigma/min( d.sigma ) ), 'r.', 'LineWidth', 2 );
+    plot( d.t/60, 20*log10( d.sigma/min( d.sigma ) ), 'r.', 'LineWidth', 2 );
     hold on;
-    plot( loct, G - min( G ), 'ks', 'LineWidth', 2, 'MarkerFace', 'k', 'MarkerSize', 3 );
+    plot( d.t/60, G - min( G ), 'ks', 'LineWidth', 2, 'MarkerFace', 'k', 'MarkerSize', 3 );
     hold off; 
     grid on;
     title(sprintf('Antenna %d',antenna), 'FontSize', 20)
-    xlim([0 24])
-    xlabel( 'Local Time  [HH:MM]', 'FontSize', 20 );
+    %xlim([0 24])
+    %xlabel( 'Local Time  [HH:MM]', 'FontSize', 20 );
+    xlabel( 'Duration since start  [min]', 'FontSize', 20 );
     ylabel( '\Delta \sigma,   \Delta GBW(55-95 MHz)  [ dB ]', 'FontSize', 20 );
     set( gca, 'FontSize', 16 );
 end
@@ -71,7 +74,7 @@ ylabel( '\Delta \sigma,   \Delta GBW(55-95 MHz)  [ dB ]', 'FontSize', 20 );
 set( gca, 'FontSize', 16 );
 %close( antenna)
 pause
-timev = d.ttot;
+timev = d.t;
 [yi, mi, di, hi, mni, si] = UnixSecs2Date(timev);
 
 dd = datenum(yi,mi,di,hi,mni,si);
@@ -105,6 +108,7 @@ else
 end
 %step=1;
 size(d.psd)
+film
 for k = 1:step:length( d.t )
 %for k = length( d.t ):length( d.t )
     if film==0
