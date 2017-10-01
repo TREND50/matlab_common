@@ -105,12 +105,22 @@ for i = 5:6 % rows
     end
 end
 
-pos = load('posGRANDproto35.txt');
-id = pos(:,1);  % Only displaying SN pods here
-xpos = pos(:,2);
-ypos = pos(:,3);
-apos = [xpos(id>0) ypos(id>0)];
-spos = [xpos(id<0) ypos(id<0)];
+%pos = load('detectorSpots_v4.txt');
+fid = fopen('detectorSpots_v4.txt');
+%pos = fscanf(fid,'%s%s%s %d %d',[59 5]);
+pos = textscan(fid,'%s %d %d',59);
+nameDet = cell2mat(pos{1});
+type = nameDet(:,1);
+id = str2num(nameDet(:,2:end));
+posDet =[pos{2} pos{3}];
+
+%id = pos(:,1);  % Only displaying SN pods here
+xpos = posDet(:,1);
+ypos = posDet(:,2);
+apos = [xpos(type=='a') ypos(type=='a')];
+aid = id(type=='a')
+sid = id(type=='s')
+spos = [xpos(type=='s') ypos(type=='s')];
 
 if elevation 
    zpos_sci = getElevation(xpos_sci,ypos_sci);
@@ -125,8 +135,14 @@ if already<2
 %   hold on
 %   plot(xpos_sci,ypos_sci,'sr','MarkerSize',8)
   plot(apos(:,1),apos(:,2),'^k','MarkerSize',8,'MarkerFaceColor','y')
+  for i = 1:size(apos,1)
+    text(double(apos(i,1))+10,double(apos(i,2)),sprintf('a%02d',aid(i)))
+  end
   hold on
   plot(spos(:,1),spos(:,2),'sr','MarkerSize',8,'MarkerFaceColor','r')
+  for i = 1:size(spos,1)
+    text(double(spos(i,1))+10,double(spos(i,2)),sprintf('s%02d',sid(i)))
+  end
 end
 
 %% Already installed ants
