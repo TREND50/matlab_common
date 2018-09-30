@@ -51,15 +51,15 @@ function data = ReadPSD1( nrun, antenna, NPAR )
   %===
   SharedGlobals;
   N         = NFFT + NPAR;
-
   % Read data
   %===
+  %strfile = [PSD_PATH sprintf('R%06d/R%06d_A%04d_PSD_data.bin',nrun,nrun,antenna)];
   strfile = [PSD_PATH sprintf('R%06d_A%04d_PSD_data.bin',nrun,antenna)];
   
   fid = fopen( strfile );
   if fid < 0  %Old format
      %disp(sprintf( 'Error in READ_PSD\n could not find file %s', strfile ) )
-     strfile = [PSD_PATH sprintf('PSD%05d_%d_data.bin', nrun, antenna )];
+     strfile = [PSD_PATH sprintf('PSD%05d/PSD%05d_%d_data.bin', nrun,nrun, antenna )];
      fid = fopen( strfile );
   end  
   if fid <= 0
@@ -69,13 +69,12 @@ function data = ReadPSD1( nrun, antenna, NPAR )
   end
   d = fread( fid, inf, 'float32' );
   fclose( fid );
-%size(d)
-%size(N)
+
   d = reshape( d, N, [] );
 
   df = 0.5*FSAMPLING/N;
   F  = [ 1:NFFT ]*df;
-  P  = 10*log10( d( 1:NFFT, : )*SCALE^2/df );
+  P  = 10*log10( d( 1:NFFT, : )*SCALE^2/df/0.3743 ); %0.3743 arrises from Hann window  [V^2/Hz]dB
   if NPAR > 0
     mu  = d( NFFT+1, : );
     sig = d( NFFT+2, : );
@@ -86,10 +85,11 @@ function data = ReadPSD1( nrun, antenna, NPAR )
 
   % Read time
   %===
+  %strfile = [PSD_PATH sprintf('R%06d/R%06d_A%04d_PSD_time.bin', nrun, nrun, antenna )];
   strfile = [PSD_PATH sprintf('R%06d_A%04d_PSD_time.bin', nrun, antenna )];
   fid = fopen( strfile );
   if fid < 0  %Old format
-     strfile = [PSD_PATH sprintf('PSD%05d_%d_time.bin', nrun, antenna )];
+     strfile = [PSD_PATH sprintf('R%06d/PSD%05d_%d_time.bin', nrun, nrun, antenna )];
      fid = fopen( strfile );
   end  
   if fid >= 0
@@ -124,7 +124,7 @@ function data = ReadPSD1( nrun, antenna, NPAR )
   data.f     = F;
   data.t     = T;
   data.ttot     = Tdeb+T; %[s]
-  data.tdeb  = Tdeb; 
+  data.tdeb  = Tdeb;
   data.flag  = flg;
   data.mu    = mu;
   data.sigma = sig;

@@ -21,7 +21,7 @@ if size(d,1)==0
     return
 end
 
-[y m day h mn s] = unixSecs2Date(d.tdeb);
+[y m day h mn s] = UnixSecs2Date(d.tdeb);
 ut = (h*3600+mn*60+s+d.t)/3600; % [h]
 loct = ut+8;
 loct = mod(loct,24); % Hour in UT
@@ -32,6 +32,8 @@ bw = find( d.f>=0e6 & d.f<=100e6);
 Fbp = d.f(bw);
 Pbp = d.psd(bw);
 G = mean( d.psd( d.f > 35e6 & d.f < 95e6, : ), 1 );
+Glin = 10.^(G/10);
+Vrms = sqrt(Glin*40e6)*1e3;  % [mV]
 
 %% Plot
 figure( antenna );
@@ -79,17 +81,17 @@ timev = d.t;
 
 dd = datenum(yi,mi,di,hi,mni,si);
 figure(antenna+1000)
-plot(dd,20*log10( d.sigma/min( d.sigma ) ), 'r.', 'LineWidth', 2 );
+%plot(dd,20*log10( d.sigma/min( d.sigma ) ), 'r.', 'LineWidth', 2 );
 hold on;
-plot( dd, G - min( G ), 'ks', 'LineWidth', 2, 'MarkerFace', 'k', 'MarkerSize', 3 );
-hold off; 
+%plot( dd, G - min( G ), 'ks', 'LineWidth', 2, 'MarkerFace', 'k', 'MarkerSize', 3 );
+plot(  d.t/60, Vrms, 'ks', 'LineWidth', 2, 'MarkerFace', 'k', 'MarkerSize', 3 );
+%hold off; 
 grid on;
-datetick('x','dd-mm HHh','keeplimits','keepticks')
-
-title(sprintf('Antenna %d',antenna), 'FontSize', 20)
+%datetick('x','dd-mm HH','keeplimits','keepticks')
+%title(sprintf('Antenna %d',antenna), 'FontSize', 20)
 %xlim([0 24])
-xlabel( 'time  [ hours ]', 'FontSize', 20 );
-ylabel( '\Delta \sigma,   \Delta GBW(55-95 MHz)  [ dB ]', 'FontSize', 20 );
+xlabel( 'Run duration (min)', 'FontSize', 20 );
+ylabel( 'V_{DAQ}^{rms} (mV)', 'FontSize', 20 );
 set( gca, 'FontSize', 16 );
 %pause
 %figure( antenna+100 );
@@ -107,12 +109,15 @@ else
     step = length( d.t )+1;
 end
 %step=1;
-size(d.psd)
 film
 for k = 1:step:length( d.t )
 %for k = length( d.t ):length( d.t )
     if film==0
-        plot( d.f/1e6, d.psd( :, length( d.t ) ), col, 'LineWidth', 2 );
+        plot( d.f(3:end)/1e6, 10.^(d.psd( 3:end, length( d.t ) )/10), col, 'LineWidth', 2 );
+        xlabel( 'Frequency (MHz)', 'FontSize', 20 );
+        ylabel( 'PSD (V^{2}/Hz)', 'FonTSize', 20 );
+        set( gca, 'FontSize', 16 );
+        pause
     else
         if  k>1
             plot( d.f/1e6, d.psd( :, k-step ), 'y', 'LineWidth', 2 );
@@ -120,8 +125,8 @@ for k = 1:step:length( d.t )
         hold off
         plot( d.f/1e6, d.psd( :, k ), col, 'LineWidth', 2 );
         grid on
-        xlabel( 'Frequency  [ MHz ]', 'FontSize', 20 );
-        ylabel( 'Amplitude [ dB ref  V / Hz^{1/2} ]', 'FonTSize', 20 );
+        xlabel( 'Frequency (MHz)', 'FontSize', 20 );
+        ylabel( 'PSD (V^{2}/Hz)', 'FonTSize', 20 );
         set( gca, 'FontSize', 16 );
         %
         [y m day h mn s] = unixSecs2Date(d.tdeb+d.t(k)+8*3600);  % Local time: UT+8h

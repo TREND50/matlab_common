@@ -17,6 +17,7 @@ T = [3.8e5 1.3e5 7.5e4 5.5e4 1.7e4 5.1e3 4.0e3 1.2e3 240];
 f = fMHz*1e6; %Hz
 I = 2*kb*f.^2.*T/c^2;  % Sky brightness (Rayleigh-Jeans approx) W/m²/sr/Hz
 par = FitLin(f(f>=30e6),log10(I(f>=30e6)),[1 1 ],0);
+par(1)
 fth = (20:5:300)*1e6;
 Ith = 10.^(par(1).*fth+par(2));
 P = trapz(fth(fmin<=fth & fth<=fmax),Ith(fmin<=fth & fth<=fmax))*2*pi  %W/m²/s

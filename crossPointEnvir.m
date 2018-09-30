@@ -18,39 +18,41 @@ Yrofit = zeros(1,size(Xrofit,2));
 for i = 1:size(Pro,2)
     Yrofit = Yrofit + Pro(i)*Xrofit.^(size(Pro,2)-i);
 end
-plot(Xrofit,Yrofit,'-b','LineWidth',2)
+plot(Xrofit,Yrofit,'-k','LineWidth',2)
+plot([270 270],[315 160],'-k','LineWidth',2)
+plot([270 1500],[160 -40],'-k','LineWidth',2)
 
 %% Power lines
-hv1 = line([-300 -20],[171.25 145]); 
-set(hv1,'LineWidth',3,'LineStyle','-','Color','r');
-hv2=line([-20 1695],[145 470]); 
-set(hv2,'LineWidth',3,'LineStyle','-','Color','r');
-hv21=line([1775 3260],[430 565]); 
-set(hv21,'LineWidth',3,'LineStyle','-','Color','r');
-hv3=line([-300 260],[115-(260+300)*(115-40)/(260+195) 115]); 
-set(hv3,'LineWidth',3,'LineStyle','-','Color','r');
-hv4=line([260 260],[115  -320]); 
-set(hv4,'LineWidth',3,'LineStyle','-','Color','r');
-hv41=line([265 375],[105 -155]); 
-set(hv41,'LineWidth',3,'LineStyle','-','Color','r');
-hv42=line([265 208],[105 230]); 
-set(hv42,'LineWidth',3,'LineStyle','-','Color','r');
-hv43=line([208 -50],[230 300]); 
-set(hv43,'LineWidth',3,'LineStyle','-','Color','r');
-hv5=line([260 350],[-320  -320]); 
-set(hv5,'LineWidth',3,'LineStyle','-','Color','r');
-hv6=line([375 1416],[-155  -200]); 
-set(hv6,'LineWidth',3,'LineStyle','-','Color','r');
-hv7=line([1416 1477],[-200  -205]); 
-set(hv7,'LineWidth',3,'LineStyle','-','Color','r');
-hv8=line([-195 -195],[40  700]); 
-set(hv8,'LineWidth',3,'LineStyle','-','Color','r');
-hv9=line([1695 1775],[470  430]); 
-set(hv9,'LineWidth',3,'LineStyle','-','Color','r');
-hv10=line([3260 3410],[565  560]); 
-set(hv10,'LineWidth',3,'LineStyle','-','Color','r');
-hv11=line([3345 3345],[563  -100]); 
-set(hv11,'LineWidth',3,'LineStyle','-','Color','r');
+% hv1 = line([-300 -20],[171.25 145]); 
+% set(hv1,'LineWidth',3,'LineStyle','-','Color','r');
+% hv2=line([-20 1695],[145 470]); 
+% set(hv2,'LineWidth',3,'LineStyle','-','Color','r');
+% hv21=line([1775 3260],[430 565]); 
+% set(hv21,'LineWidth',3,'LineStyle','-','Color','r');
+% hv3=line([-300 260],[115-(260+300)*(115-40)/(260+195) 115]); 
+% set(hv3,'LineWidth',3,'LineStyle','-','Color','r');
+% hv4=line([260 260],[115  -320]); 
+% set(hv4,'LineWidth',3,'LineStyle','-','Color','r');
+% hv41=line([265 375],[105 -155]); 
+% set(hv41,'LineWidth',3,'LineStyle','-','Color','r');
+% hv42=line([265 208],[105 230]); 
+% set(hv42,'LineWidth',3,'LineStyle','-','Color','r');
+% hv43=line([208 -50],[230 300]); 
+% set(hv43,'LineWidth',3,'LineStyle','-','Color','r');
+% hv5=line([260 350],[-320  -320]); 
+% set(hv5,'LineWidth',3,'LineStyle','-','Color','r');
+% hv6=line([375 1416],[-155  -200]); 
+% set(hv6,'LineWidth',3,'LineStyle','-','Color','r');
+% hv7=line([1416 1477],[-200  -205]); 
+% set(hv7,'LineWidth',3,'LineStyle','-','Color','r');
+% hv8=line([-195 -195],[40  700]); 
+% set(hv8,'LineWidth',3,'LineStyle','-','Color','r');
+% hv9=line([1695 1775],[470  430]); 
+% set(hv9,'LineWidth',3,'LineStyle','-','Color','r');
+% hv10=line([3260 3410],[565  560]); 
+% set(hv10,'LineWidth',3,'LineStyle','-','Color','r');
+% hv11=line([3345 3345],[563  -100]); 
+% set(hv11,'LineWidth',3,'LineStyle','-','Color','r');
 
 %% Train
 %myCircle(-1000,-1980,2000)
@@ -62,7 +64,7 @@ Ytrfit = zeros(1,size(Xtrfit,2));
 for i = 1:size(Ptr,2)
     Ytrfit = Ytrfit + Ptr(i)*Xtrfit.^(size(Ptr,2)-i);
 end
-plot(Xtrfit,Ytrfit,'--b','LineWidth',2)
+plot(Xtrfit,Ytrfit,'--k','LineWidth',2)
 
 %% Houses
 house(350,-300)
@@ -90,29 +92,30 @@ house(-80,500)
 % plot(-203.8,96.3,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
 % plot(-205.7,44,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
 
-plot(1416,-200,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
+ms = 7;
+plot(1416,-200,'pr','MarkerFace', 'r', 'MarkerSize', ms );
 
-%plot(1477,-205,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(1476,-206,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
+%plot(1477,-205,'pm','MarkerFace', 'm', 'MarkerSize', ms );
+plot(1476,-206,'pr','MarkerFace', 'r', 'MarkerSize', ms );
 
-plot(1775,430,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
+plot(1775,430,'pr','MarkerFace', 'r', 'MarkerSize', ms );
 
-%plot(1695,470,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(1684,460.5,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
+%plot(1695,470,'pm','MarkerFace', 'm', 'MarkerSize', ms );
+plot(1684,460.5,'pr','MarkerFace', 'r', 'MarkerSize', ms );
 
-plot(3345,365,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(3260,565,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(3410,560,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(260,115,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(260,-135,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(-20,145,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(-195,95,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(-195,40,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
-plot(-180,160,'pm','MarkerFace', 'm', 'MarkerSize', 12 );
+plot(3345,365,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(3260,565,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(3410,560,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(260,115,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(260,-135,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(-20,145,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(-195,95,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(-195,40,'pr','MarkerFace', 'r', 'MarkerSize', ms );
+plot(-180,160,'pr','MarkerFace', 'r', 'MarkerSize', ms );
 
 
 %% Residence
-plot(1490,-50,'sr','MarkerFace', 'r', 'MarkerSize', 12 );
+plot(1490,-50,'sr','MarkerFace', 'r', 'MarkerSize', 8 );
 
 
 warning on

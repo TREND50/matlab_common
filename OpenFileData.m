@@ -8,7 +8,7 @@ if SelectedData
         filename = sprintf( 'S%06d_A%04d_data.bin', nrun, antenna );
 else
         PATH = RAWDATA_PATH;
-        filename = sprintf('R%06d_A%03d_data.bin',nrun,antenna);
+        filename = sprintf('R%06d_A%04d_data.bin',nrun,antenna);
 end;
 ft = fopen( [ PATH, filename ], 'r' );
 if ft == -1

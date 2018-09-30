@@ -63,7 +63,7 @@ for k = 1:length(phi)
         xe = the*sind(phie);
         ye = the*cosd(phie);
     end
-    disp(sprintf('Candidate %d: th = %3.1f pm %3.1f deg, phi = %3.1f pm %3.1f deg. Sig tot = %3.1f pixels.',k,the,sig_th,phie,sig_ph,sig))
+    %disp(sprintf('Candidate %d: th = %3.1f pm %3.1f deg, phi = %3.1f pm %3.1f deg. Sig tot = %3.1f pixels.',k,the,sig_th,phie,sig_ph,sig))
     [a indx] = min(abs(x-xe));
     [a indy] = min(abs(y-ye));
 

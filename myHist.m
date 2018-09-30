@@ -5,12 +5,12 @@ function [N, C] = myHist( X, nbin, clr, label,magn )
       magn = 1;
   end
   sX = std( X );
-  K = find( label ~= '\' );
+  %K = find( label ~= '\' );
   %fprintf( [ label( K ), ' = %12.5e\n' ], sX );
 
-  %bins = [0.5:1:19.5];
-  %[ N, C ] = hist( X, bins );
-  [ N, C ] = hist( X, nbin );
+  bins = [-0.6:0.13:0.6];
+  [ N, C ] = hist( X, bins );
+%  [ N, C ] = hist( X, nbin );
   dC = 0;
   %mean( diff( C ) );
   nrm = sum( N )*dC;
